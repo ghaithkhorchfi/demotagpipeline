@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    environment {
+        // Define any environment variables if needed
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code including tags
+                script {
+                    checkout([$class: 'GitSCM', branches: [[name: '*/develop']], userRemoteConfigs: [[url: 'YOUR_GIT_REPO_URL']], extensions: [[$class: 'CloneOption', honorRefspec: true, noTags: false]]])
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Your build steps go here
+                script {
+                    // For example, you might use Maven for a Java project
+                    sh 'mvn clean install'
+                }
+            }
+        }
+    }
+
+    post {
+        // Define post-build actions
+        success {
+            script {
+                // Check if the build was triggered by a tag creation
+                def isTagBuild = env.TAG_NAME != null
+
+                if (isTagBuild) {
+                    // Perform additional steps for tag builds
+                    echo "This build was triggered by tag: ${env.TAG_NAME}"
+                    // Add any additional steps you need for tag builds
+                }
+            }
+        }
+    }
+}
