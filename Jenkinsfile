@@ -28,7 +28,7 @@ pipeline {
                 allOf{
                     branch "develop"
                     not{
-                        equals expected: "" actual: env.GIT_TAG
+                        equals expected: "", actual: env.GIT_TAG
                     }
 
                 }
