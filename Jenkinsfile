@@ -17,12 +17,12 @@ pipeline {
         stage('Check if tag is pushed') {
             when {
                 expression { 
-                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG_NAME != ''
+                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG != ''
                 }
             }
 
             steps {
-                echo "Tag pushed on develop branch: ${env.GIT_TAG_NAME}"
+                echo "Tag pushed on develop branch: ${env.GIT_TAG}"
                 // Add your build steps here
             }
         }
@@ -30,7 +30,7 @@ pipeline {
         stage('Clone Code') {
             when {
                 expression { 
-                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG_NAME != ''
+                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG != ''
                 }
             }
 
