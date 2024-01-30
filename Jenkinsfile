@@ -5,20 +5,20 @@ pipeline {
         stage('Get Git Tag') {
             steps {
                 script {
-                env.GIT_TAG = sh(returnStdout: true, script: 'git tag --points-at HEAD | awk \'NR == 1 {print}\'').trim()
-                echo "env.GIT_TAG=${env.GIT_TAG}"
+                env.TAG_NAME = sh(returnStdout: true, script: 'git tag --points-at HEAD | awk \'NR == 1 {print}\'').trim()
+                echo "env.TAG_NAME=${env.TAG_NAME}"
                 } // script
             } // steps
         }
         stage('Check if tag is pushed') {
             when {
                 expression { 
-                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG != ''
+                    return env.BRANCH_NAME == 'develop' && env.TAG_NAME != ''
                 }
             }
 
             steps {
-                echo "Tag pushed on develop branch: ${env.GIT_TAG}"
+                echo "Tag pushed on develop branch: ${env.TAG_NAME}"
                 // Add your build steps here
             }
         }
@@ -27,9 +27,7 @@ pipeline {
             when {
                 allOf{
                     branch "develop"
-                    not{
-                        equals expected: "", actual: env.GIT_TAG
-                    }
+                    tag "*"
 
                 }
             }
