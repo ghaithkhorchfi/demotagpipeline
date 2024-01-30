@@ -31,11 +31,7 @@ pipeline {
 
         stage('Clone Code') {
             when {
-                allOf{
-                    branch "develop"
-                    tag "*"
-
-                }
+                tag "*-rc"
             }
 
             steps {
