@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        GIT_TAG= 'first'
-    }
-
     stages {
         stage('Get Git Tag') {
             steps {
@@ -29,6 +25,13 @@ pipeline {
 
         stage('Clone Code') {
             when {
+                allOf{
+                    branch "develop"
+                    not{
+                        equals expected: "" actual: env.GIT_TAG
+                    }
+
+                }
                 expression { 
                     return env.BRANCH_NAME == 'develop' && env.GIT_TAG != ''
                 }
