@@ -6,6 +6,14 @@ pipeline {
     }
 
     stages {
+        stage('Get Git Tag') {
+            steps {
+                script {
+                env.GIT_TAG = sh(returnStdout: true, script: 'git tag --points-at HEAD | awk \'NR == 1 {print}\'').trim()
+                echo "env.GIT_TAG=${env.GIT_TAG}"
+                } // script
+            } // steps
+        }
         stage('Check if tag is pushed') {
             when {
                 expression { 
