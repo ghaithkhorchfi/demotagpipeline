@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GIT_TAG= ''
+        GIT_TAG= 'first'
     }
 
     stages {
@@ -17,12 +17,12 @@ pipeline {
         stage('Check if tag is pushed') {
             when {
                 expression { 
-                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG != ''
+                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG_NAME != ''
                 }
             }
 
             steps {
-                echo "Tag pushed on develop branch: ${env.GIT_TAG}"
+                echo "Tag pushed on develop branch: ${env.GIT_TAG_NAME}"
                 // Add your build steps here
             }
         }
@@ -30,7 +30,7 @@ pipeline {
         stage('Clone Code') {
             when {
                 expression { 
-                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG != ''
+                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG_NAME != ''
                 }
             }
 
