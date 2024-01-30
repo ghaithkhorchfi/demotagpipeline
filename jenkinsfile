@@ -2,43 +2,45 @@ pipeline {
     agent any
 
     environment {
-        // Define any environment variables if needed
+        TAG_NAME = ''
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the code including tags
-                script {
-                    checkout([$class: 'GitSCM', branches: [[name: '*/develop']], userRemoteConfigs: [[url: 'YOUR_GIT_REPO_URL']], extensions: [[$class: 'CloneOption', honorRefspec: true, noTags: false]]])
+        stage('Check if tag is pushed') {
+            when {
+                expression { 
+                    return env.BRANCH_NAME == 'develop' && env.TAG_NAME != ''
                 }
+            }
+
+            steps {
+                echo "Tag pushed on develop branch: ${env.TAG_NAME}"
+                // Add your build steps here
             }
         }
 
-        stage('Build') {
+        stage('Clone Code') {
+            when {
+                expression { 
+                    return env.BRANCH_NAME == 'develop' && env.TAG_NAME != ''
+                }
+            }
+
             steps {
-                // Your build steps go here
                 script {
-                    // For example, you might use Maven for a Java project
-                    sh 'mvn clean install'
+                    // Clone the code from GitHub using the provided credentials
+                    checkout([$class: 'GitSCM', 
+                              branches: [[name: env.BRANCH_NAME]], 
+                              doGenerateSubmoduleConfigurations: false, 
+                              extensions: [[$class: 'CloneOption', depth: 1, noTags: false, shallow: true, reference: '', timeout: 120]], 
+                              submoduleCfg: [], 
+                              userRemoteConfigs: [[credentialsId: 'your-credentials-id', url: 'https://github.com/your/repo.git']]])
                 }
             }
         }
     }
 
-    post {
-        // Define post-build actions
-        success {
-            script {
-                // Check if the build was triggered by a tag creation
-                def isTagBuild = env.TAG_NAME != null
-
-                if (isTagBuild) {
-                    // Perform additional steps for tag builds
-                    echo "This build was triggered by tag: ${env.TAG_NAME}"
-                    // Add any additional steps you need for tag builds
-                }
-            }
-        }
+    triggers {
+        pollSCM('* * * * *') // Poll SCM for changes every minute, adjust as needed
     }
 }
