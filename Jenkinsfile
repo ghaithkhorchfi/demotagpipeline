@@ -34,7 +34,7 @@ pipeline {
                               doGenerateSubmoduleConfigurations: false, 
                               extensions: [[$class: 'CloneOption', depth: 1, noTags: false, shallow: true, reference: '', timeout: 120]], 
                               submoduleCfg: [], 
-                              userRemoteConfigs: [[credentialsId: 'your-credentials-id', url: 'https://github.com/your/repo.git']]])
+                              userRemoteConfigs: [[credentialsId: 'your-credentials-id', url: 'https://github.com/ghaithkhorchfi/demotagpipeline.git']]])
                 }
             }
         }
