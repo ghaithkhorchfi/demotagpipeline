@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GIT_TAG_NAME= 'first'
+        GIT_TAG= 'first'
     }
 
     stages {
