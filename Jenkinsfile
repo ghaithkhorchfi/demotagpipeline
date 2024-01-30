@@ -32,9 +32,6 @@ pipeline {
                     }
 
                 }
-                expression { 
-                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG != ''
-                }
             }
 
             steps {
