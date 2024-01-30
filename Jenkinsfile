@@ -10,6 +10,12 @@ pipeline {
                 } // script
             } // steps
         }
+        stage("print"){
+            steps{
+                echo "${env.BRANCH_NAME}"
+                echo "${env.TAG_NAME}"
+            }
+        }
         stage('Check if tag is pushed') {
             when {
                 expression { 
