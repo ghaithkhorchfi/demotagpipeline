@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        TAG_NAME = ''
+        GIT_TAG= ''
     }
 
     stages {
@@ -17,12 +17,12 @@ pipeline {
         stage('Check if tag is pushed') {
             when {
                 expression { 
-                    return env.BRANCH_NAME == 'develop' && env.TAG_NAME != ''
+                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG != ''
                 }
             }
 
             steps {
-                echo "Tag pushed on develop branch: ${env.TAG_NAME}"
+                echo "Tag pushed on develop branch: ${env.GIT_TAG}"
                 // Add your build steps here
             }
         }
@@ -30,7 +30,7 @@ pipeline {
         stage('Clone Code') {
             when {
                 expression { 
-                    return env.BRANCH_NAME == 'develop' && env.TAG_NAME != ''
+                    return env.BRANCH_NAME == 'develop' && env.GIT_TAG != ''
                 }
             }
 
@@ -38,11 +38,11 @@ pipeline {
                 script {
                     // Clone the code from GitHub using the provided credentials
                     checkout([$class: 'GitSCM', 
-                              branches: [[name: env.BRANCH_NAME]], 
+                              branches: [[name: 'develop']], 
                               doGenerateSubmoduleConfigurations: false, 
                               extensions: [[$class: 'CloneOption', depth: 1, noTags: false, shallow: true, reference: '', timeout: 120]], 
                               submoduleCfg: [], 
-                              userRemoteConfigs: [[credentialsId: 'your-credentials-id', url: 'https://github.com/ghaithkhorchfi/demotagpipeline.git']]])
+                              userRemoteConfigs: [[credentialsId: 'token', url: 'https://github.com/ghaithkhorchfi/demotagpipeline.git']]])
                 }
             }
         }
