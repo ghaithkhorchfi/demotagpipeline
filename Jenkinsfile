@@ -11,11 +11,8 @@ pipeline {
             } // steps
         }
         stage("print"){
-            when {
-                branch "develop"
-            }
             steps{
-                echo "${env.BRANCH_NAME}"
+                sh "git branch"
                 echo "${env.TAG_NAME}"
             }
         }
