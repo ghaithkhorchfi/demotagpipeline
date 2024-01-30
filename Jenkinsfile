@@ -11,6 +11,9 @@ pipeline {
             } // steps
         }
         stage("print"){
+            when {
+                branch "develop"
+            }
             steps{
                 echo "${env.BRANCH_NAME}"
                 echo "${env.TAG_NAME}"
