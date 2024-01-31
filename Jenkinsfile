@@ -7,6 +7,8 @@ pipeline {
                 script {
                 env.TAG_NAME = sh(returnStdout: true, script: 'git tag --points-at HEAD | awk \'NR == 1 {print}\'').trim()
                 echo "env.TAG_NAME=${env.TAG_NAME}"
+                sh 'git checkout develop'
+                echo "branch name ${env.BRANCH_NAME}"
                 } // script
             } // steps
         }
