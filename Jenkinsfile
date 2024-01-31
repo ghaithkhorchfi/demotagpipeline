@@ -9,6 +9,7 @@ pipeline {
                 echo "env.TAG_NAME=${env.TAG_NAME}"
                 sh 'git checkout develop'
                 echo "branch name ${env.BRANCH_NAME}"
+                echo "success testing"
                 } // script
             } // steps
         }
