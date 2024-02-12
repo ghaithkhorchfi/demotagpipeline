@@ -6,8 +6,8 @@ pipeline {
             steps{
                 script {
                     echo "${env.GIT_COMMIT}"
-                    env.exist = (returnStdout: true, script: "git branch --contains ${env.GIT_COMMIT}").trim()
-                    env.GET_TAG = (returnStdout: true, script: " git describe --tags ${env.GIT_COMMIT}").trim()
+                    env.exist = sh(returnStdout: true, script: "git branch --contains ${env.GIT_COMMIT}").trim()
+                    env.GET_TAG = sh(returnStdout: true, script: " git describe --tags ${env.GIT_COMMIT}").trim()
                     echo "${env.exist} : ${env.GET_TAG} commitId ${env.GIT_COMMIT}"
                 } //script
             }//steps
