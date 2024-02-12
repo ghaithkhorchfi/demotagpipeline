@@ -13,6 +13,17 @@ pipeline {
                 } //script
             }//steps
         }
+    stage("test condition"){
+        when{
+            allOf{
+              env.EXIST !=null
+              env.GET_TAG "*-rc"
+            }
+        }
+            steps{
+                echo "test success"
+            }//steps
+        }
         stage('Get Git Tag') {
             steps {
                 script {
