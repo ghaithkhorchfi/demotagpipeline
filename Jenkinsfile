@@ -17,8 +17,9 @@ pipeline {
         when{
             allOf{
             expression{
-              env.EXIST !=null && env.GET_TAG=~"*-rc"
+              env.EXIST !=null
             }
+            tag "*-rc"
             }
         }
             steps{
