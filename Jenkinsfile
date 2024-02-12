@@ -16,7 +16,7 @@ pipeline {
     stage("test condition"){
        when{
            expression{
-            return env.EXIST !=null && env.GET_TAG==~'/.*-rc/'
+            return env.EXIST !=null && env.GET_TAG.matches('.*-rc')
             }
         }
             steps{
