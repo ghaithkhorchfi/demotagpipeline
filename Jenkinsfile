@@ -15,12 +15,13 @@ pipeline {
         }
     stage("test condition"){
         when{
-            expression{
+         /*   expression{
             return env.EXIST !=null && env.GET_TAG==~ '\\*-rc'
-            }
+            }*/
         }
+        env.TEST = env.EXIST !=null && env.GET_TAG==~ '\\*-rc'
             steps{
-                echo "test success yes"
+                echo "${env.TEST}"
             }//steps
         }
         stage('Get Git Tag') {
