@@ -20,7 +20,7 @@ pipeline {
             }
         }
             steps{
-                echo "yes done"
+                echo "yes done hello"
             }//steps
         }
         stage('Get Git Tag') {
