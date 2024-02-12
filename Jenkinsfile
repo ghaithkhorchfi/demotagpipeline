@@ -2,6 +2,16 @@ pipeline {
     agent any
 
     stages {
+        stage("check commit in develop branch"){
+            steps{
+                script {
+                    echo "${env.COMMIT_ID}"
+                    env.exist = sh "git branch --contains $COMMIT_ID"
+                    env.GET_TAG = sh " git describe --tags$COMMIT_ID "
+                    echo "${env.exist} : ${env.GET_TAG} commitId ${env.COMMIT_ID}"
+                } //script
+            }//steps
+        }
         stage('Get Git Tag') {
             steps {
                 script {
