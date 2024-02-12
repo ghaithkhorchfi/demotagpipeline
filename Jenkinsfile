@@ -20,7 +20,7 @@ pipeline {
             }
         }
             steps{
-                echo "${env.TEST}"
+                echo "yes done"
             }//steps
         }
         stage('Get Git Tag') {
