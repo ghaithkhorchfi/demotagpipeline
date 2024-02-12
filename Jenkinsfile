@@ -19,7 +19,7 @@ pipeline {
             return env.EXIST !=null && env.GET_TAG==~ '\\*-rc'
             }*/
         //}
-        env.TEST = env.EXIST !=null && env.GET_TAG==~ '\\*-rc'
+        env.TEST = env.EXIST !=null && env.GET_TAG==~ '/*-rc/'
             steps{
                 echo "${env.TEST}"
             }//steps
