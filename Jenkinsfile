@@ -5,10 +5,10 @@ pipeline {
         stage("check commit in develop branch"){
             steps{
                 script {
-                    echo "${env.COMMIT_ID}"
-                    env.exist = sh "git branch --contains ${env.COMMIT_ID}"
-                    env.GET_TAG = sh " git describe --tags${env.COMMIT_ID}"
-                    echo "${env.exist} : ${env.GET_TAG} commitId ${env.COMMIT_ID}"
+                    echo "${env.GIT_COMMIT}"
+                    env.exist = sh "git branch --contains ${env.GIT_COMMIT}"
+                    env.GET_TAG = sh " git describe --tags${env.GIT_COMMIT}"
+                    echo "${env.exist} : ${env.GET_TAG} commitId ${env.GIT_COMMIT}"
                 } //script
             }//steps
         }
