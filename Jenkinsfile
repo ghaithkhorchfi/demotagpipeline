@@ -14,11 +14,11 @@ pipeline {
             }//steps
         }
     stage("test condition"){
-        when{
+       // when{
          /*   expression{
             return env.EXIST !=null && env.GET_TAG==~ '\\*-rc'
             }*/
-        }
+        //}
         env.TEST = env.EXIST !=null && env.GET_TAG==~ '\\*-rc'
             steps{
                 echo "${env.TEST}"
