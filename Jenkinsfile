@@ -6,10 +6,10 @@ pipeline {
             steps{
                 script {
                     echo "${env.GIT_COMMIT}"
-                    env.exist = sh(returnStdout: true, script: "git branch develop --contains ${env.GIT_COMMIT}").trim()
-                    echo "${env.exist}"
+                    env.EXIST = sh(returnStdout: true, script: "git branch --contains | grep develop ${env.GIT_COMMIT}").trim()
+                    echo "${env.EXIST}"
                     env.GET_TAG = sh(returnStdout: true, script: " git describe --tags ${env.GIT_COMMIT}").trim()
-                    echo "${env.exist} : ${env.GET_TAG} commitId ${env.GIT_COMMIT}"
+                    echo "${env.EXIST} : ${env.GET_TAG} commitId ${env.GIT_COMMIT}"
                 } //script
             }//steps
         }
